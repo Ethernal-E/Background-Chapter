@@ -1,0 +1,27 @@
+name: Build LaTeX document
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    
+    - name: Set up LaTeX
+      uses: dante-ev/latex-action@v2
+    
+    - name: Compile LaTeX document
+      run: latexmk -pdf main.tex
+    
+    - name: Upload PDF to GitHub Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: document
+        path: main.pdf

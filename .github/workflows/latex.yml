@@ -13,16 +13,13 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-
-    - name: Install TeX Live
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y texlive-full
-
-    - name: Compile LaTeX document
-      run: |
-        latexmk -pdf main.tex -latexoption=-file-line-error -latexoption=-interaction=nonstopmode
     
+    - name: Compile LaTeX document
+      uses: xu-cheng/latex-action@v2  # 使用 xu-cheng 的 LaTeX action
+      with:
+        root_file: main.tex  # 主 LaTeX 文件
+        # 如果你的主文件在子目录中，使用路径，例如 src/main.tex
+
     - name: Upload PDF to GitHub Artifacts
       uses: actions/upload-artifact@v3
       with:

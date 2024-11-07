@@ -13,12 +13,15 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-    
-    - name: Set up LaTeX
-      uses: dante-ev/latex-action@v3.0.0  # 使用最新的版本
-    
+
+    - name: Install TeX Live
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y texlive-full
+
     - name: Compile LaTeX document
-      run: latexmk -pdf main.tex -latexoption=-file-line-error -latexoption=-interaction=nonstopmode
+      run: |
+        latexmk -pdf main.tex -latexoption=-file-line-error -latexoption=-interaction=nonstopmode
     
     - name: Upload PDF to GitHub Artifacts
       uses: actions/upload-artifact@v3
